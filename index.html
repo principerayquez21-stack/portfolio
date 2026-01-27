@@ -3,74 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Engineer Portfolio</title>
+    <title>Kenneth Robinson-Neal | AI Software Engineer</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 20px; background: #f4f4f9; color: #333; }
-        header { text-align: center; padding: 50px 0; background: #2d3436; color: white; border-radius: 10px; }
-        section { background: white; padding: 20px; margin-top: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h2 { color: #0984e3; border-bottom: 2px solid #0984e3; padding-bottom: 5px; }
-        .project { margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; background: #0f172a; color: #f8fafc; }
+        header { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; border: 1px solid #334155; }
+        .badge { display: inline-block; background: #38bdf8; color: #0f172a; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8em; margin: 5px; }
+        section { background: #1e293b; padding: 25px; margin-top: 25px; border-radius: 12px; border: 1px solid #334155; }
+        h2 { color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .project-card { background: #0f172a; padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #38bdf8; }
+        .btn { display: inline-block; background: #38bdf8; color: #0f172a; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 15px; }
     </style>
 </head>
 <body>
     <header>
         <h1>Kenneth Robinson-Neal</h1>
-        <p>Aspiring AI Software Engineer | North Carolina</p>
+        <p>AI Trainer & CS Student | Specializing in LLM Alignment & Python</p>
+        <div class="badge">RLHF</div> <div class="badge">Prompt Engineering</div> <div class="badge">Python</div>
     </header>
 
     <section id="about">
-        <h2>About Me</h2>
-        <p>Transitioning from a career in public service with the NC Department of Adult Corrections to the cutting edge of AI development. Dedicated to building intelligent solutions and continuously learning advanced algorithms.</p>
+        <h2>Professional Profile</h2>
+        <p>Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating and ranking LLM responses through RLHF methodologies to ensure accuracy and safety[cite: 10, 13, 16]. I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University[cite: 43, 44, 45].</p>
+        <p>With a background in the <strong>NC Department of Adult Corrections</strong>, I bring a unique focus on operational security, crisis management, and data integrity to the AI field[cite: 30, 31, 33, 34].</p>
+    </section>
+
+    <section id="experience">
+        <h2>Key Experience</h2>
+        <div class="project-card">
+            <h3>AI Trainer | Outlier AI</h3>
+            <p>Developing "gold-standard" responses for Large Language Models and conducting rigorous fact-checking to eliminate model hallucinations[cite: 10, 14, 15].</p>
+        </div>
     </section>
 
     <section id="projects">
-        <h2>Featured Projects</h2>
-        <div class="project">
-            <h3>AI Portfolio Website</h3>
-            <p>A responsive site built to showcase my transition into software engineering. Hosted on GitHub Pages.</p>
+        <h2>Featured AI Projects</h2>
+        <div class="project-card">
+            <h3>Multimodal AI Vision</h3>
+            <p>A web application utilizing Computer Vision to generate descriptive text from image uploads.</p>
         </div>
-        </section>
+        <a href="Ken_resume.pdf" class="btn">View Full Resume</a>
+    </section>
 
     <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: principerayquez21@gmail.com</p>
-        <p><a href="https://github.com/principerayquez21-stack">View my GitHub</a></p>
+        <h2>Get In Touch</h2>
+        <p>📍 Saint Pauls, NC (Willing to relocate) [cite: 2, 8]</p>
+        <p>📧 principerayquez21@gmail.com [cite: 2]</p>
     </section>
 </body>
 </html>
-<div class="project">
-    <h3>Project 1: AI Mood Detector</h3>
-    <p>This tool uses Natural Language Processing (NLP) to analyze the sentiment of your text in real-time.</p>
-Project Description: AI Mood Detector
-Overview Developed a real-time Sentiment Analysis application that leverages Natural Language Processing (NLP) to categorize user input as positive, negative, or neutral.
-
-Technical Highlights
-
-NLP Integration: Utilized a sentiment analysis library to perform algorithmic text scoring based on a lexicon of weighted terms.
-
-Front-End Logic: Engineered the interface using HTML5 and JavaScript to handle asynchronous user input and provide immediate visual feedback.
-
-Real-Time Processing: Optimized the tool to run entirely in the browser, demonstrating an understanding of client-side execution and efficient resource management.
-
-Deployment: Successfully managed the end-to-end deployment lifecycle via GitHub Pages, ensuring a live, interactive demo for prospective emplo
-    <textarea id="userInput" placeholder="Type something here (e.g., 'I love learning AI!')" style="width:100%; height:100px;"></textarea>
-    <button onclick="analyzeSentiment()" style="margin-top:10px; padding:10px 20px; background:#0984e3; color:white; border:none; border-radius:5px; cursor:pointer;">Analyze Mood</button>
-    
-    <div id="result" style="margin-top:20px; font-weight:bold; font-size:1.2em;"></div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/sentiment@5.0.2/lib/index.min.js"></script>
-
-<script>
-    function analyzeSentiment() {
-        const text = document.getElementById('userInput').value;
-        const sentiment = new Sentiment();
-        const result = sentiment.analyze(text);
-        
-        let mood = "Neutral 😐";
-        if (result.score > 0) mood = "Positive 😊";
-        if (result.score < 0) mood = "Negative ☹️";
-        
-        document.getElementById('result').innerHTML = `Detected Mood: ${mood} (Score: ${result.score})`;
-    }
-</script>
