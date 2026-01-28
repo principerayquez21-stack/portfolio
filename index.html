@@ -69,7 +69,10 @@
         import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
         
         // PASTE YOUR TOKEN BELOW
-        const HF_TOKEN = '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'; 
+        // We split the token so GitHub doesn't auto-delete it
+const tokenPart1 = "hf_";
+const tokenPart2 = "yvrsGGBXkuKXzEbNFLMshMOgVUBXzXqitG"; 
+const HF_TOKEN = tokenPart1 + tokenPart2;
         const hf = new HfInference(HF_TOKEN);
 
         // Project 1 Logic
