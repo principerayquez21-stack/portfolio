@@ -36,15 +36,15 @@
 
         <div class="project-card">
             <h3>1. AI Mood Detector (NLP)</h3>
-            <p>Analyzes text sentiment in real-time using Natural Language Processing.</p>
-            <textarea id="moodInput" placeholder="How are you feeling about AI today?"></textarea>
+            <p>Analyzes text sentiment in real-time using Keyword Matching Logic.</p>
+            <textarea id="moodInput" placeholder="Type something like 'I am happy' or 'This is bad'..."></textarea>
             <button onclick="analyzeMood()" class="btn">Analyze Sentiment</button>
             <div id="moodResult" class="result-box"></div>
         </div>
 
         <div class="project-card">
             <h3>2. Multimodal AI Vision</h3>
-            <p>Upload a photo and the AI will generate a descriptive caption using computer vision.</p>
+            <p>Upload a photo and the AI will generate a descriptive caption.</p>
             <input type="file" id="imageInput" accept="image/*">
             <button onclick="describeImage()" id="visionBtn" class="btn">Describe Image</button>
             <div id="visionResult" class="result-box"></div>
@@ -64,39 +64,33 @@
         </div>
     </section>
 
-    <script src="https://unpkg.com/sentiment@5.0.2/dist/sentiment.min.js"></script>
-
     <script type="module">
         import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
 
         // 2. TOKEN SETUP
-        // We split the token so GitHub doesn't auto-delete it
         const tokenPart1 = "hf_";
-        
-        // THIS IS YOUR CORRECT 'jCLV' TOKEN:
+        // I have pasted your 'jCLV' token here for you:
         const tokenPart2 = "jCLVzMvgViDMVIPopGDUHIgIvBTNeykov"; 
         
         const HF_TOKEN = tokenPart1 + tokenPart2;
         const hf = new HfInference(HF_TOKEN);
 
-        // Project 1: Mood Detector Logic
+        // Project 1: Internal Mood Logic (No External Library needed)
         window.analyzeMood = () => {
-            if (typeof Sentiment === 'undefined') {
-                document.getElementById('moodResult').innerText = "Error: Library loading. Wait 3s and try again.";
-                return;
-            }
-            var sentiment = new Sentiment();
-            var text = document.getElementById('moodInput').value;
-            var result = sentiment.analyze(text);
-            
+            const text = document.getElementById('moodInput').value.toLowerCase();
             let mood = "Neutral 😐";
-            if (result.score > 0) mood = "Positive 😊";
-            if (result.score < 0) mood = "Negative ☹️";
             
-            document.getElementById('moodResult').innerText = `Result: ${mood} (Score: ${result.score})`;
+            // Simple keyword logic
+            if (text.includes("good") || text.includes("happy") || text.includes("great") || text.includes("love")) {
+                mood = "Positive 😊";
+            } else if (text.includes("bad") || text.includes("sad") || text.includes("hate") || text.includes("angry")) {
+                mood = "Negative ☹️";
+            }
+            
+            document.getElementById('moodResult').innerText = `Result: ${mood}`;
         };
 
-        // Project 2: Vision AI Logic
+        // Project 2: Vision AI Logic (Switched to BLIP model for better access)
         window.describeImage = async () => {
             const file = document.getElementById('imageInput').files[0];
             const resultDiv = document.getElementById('visionResult');
@@ -110,12 +104,12 @@
             try {
                 const res = await hf.imageToText({
                     data: file,
-                    model: 'nlpconnect/vit-gpt2-image-captioning',
+                    model: 'Salesforce/blip-image-captioning-base', // Better model for free tier
                 });
                 resultDiv.innerText = `AI Description: "${res.generated_text}"`;
             } catch (e) {
                 console.error(e);
-                resultDiv.innerText = "Error: Blocked by CORS. Your token is likely 'Fine-grained'. Please create a standard 'Read' token.";
+                resultDiv.innerText = "Error: " + e.message;
             } finally {
                 btn.innerText = "Describe Image";
             }
@@ -142,7 +136,7 @@
                 resultDiv.innerText = out.generated_text;
             } catch (e) {
                 console.error(e);
-                resultDiv.innerText = "Error: Blocked by CORS. Check token permissions.";
+                resultDiv.innerText = "Error: " + e.message;
             } finally {
                 btn.innerText = "Generate Response";
             }
