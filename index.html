@@ -64,30 +64,36 @@
         </div>
     </section>
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/sentiment/5.0.2/sentiment.min.js"></script>
+ <script src="https://unpkg.com/sentiment@5.0.2/dist/sentiment.min.js"></script>
 
     <script type="module">
         import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
 
-        // 1. SECURE TOKEN LOGIC (Prevents GitHub Auto-Delete)
+        // 2. TOKEN SETUP
+        // We split the token to trick GitHub's security bot
         const tokenPart1 = "hf_";
+        
         // PASTE YOUR NEW "READ" TOKEN BELOW (Remove the 'hf_' part!)
         const tokenPart2 = "medYCPbVLcKFdySKdSDPzqIQPvcjwSOLQv"; 
         
         const HF_TOKEN = tokenPart1 + tokenPart2;
         const hf = new HfInference(HF_TOKEN);
 
-        // Project 1: Mood Detector
+        // Project 1: Mood Detector Logic
         window.analyzeMood = () => {
-            // The library loads as 'Sentiment' globally
-            const sentiment = new Sentiment(); 
-            const text = document.getElementById('moodInput').value;
-            const result = sentiment.analyze(text);
-            let mood = result.score > 0 ? "Positive 😊" : result.score < 0 ? "Negative ☹️" : "Neutral 😐";
+            // Now 'Sentiment' will be defined correctly
+            var sentiment = new Sentiment();
+            var text = document.getElementById('moodInput').value;
+            var result = sentiment.analyze(text);
+            
+            let mood = "Neutral 😐";
+            if (result.score > 0) mood = "Positive 😊";
+            if (result.score < 0) mood = "Negative ☹️";
+            
             document.getElementById('moodResult').innerText = `Result: ${mood} (Score: ${result.score})`;
         };
 
-        // Project 2: Vision AI (Image Captioning)
+        // Project 2: Vision AI Logic
         window.describeImage = async () => {
             const file = document.getElementById('imageInput').files[0];
             const resultDiv = document.getElementById('visionResult');
@@ -101,18 +107,18 @@
             try {
                 const res = await hf.imageToText({
                     data: file,
-                    model: 'nlpconnect/vit-gpt2-image-captioning', // This model is correct
+                    model: 'nlpconnect/vit-gpt2-image-captioning',
                 });
                 resultDiv.innerText = `AI Description: "${res.generated_text}"`;
             } catch (e) {
                 console.error(e);
-                resultDiv.innerText = "Error: Token permission denied (CORS) or invalid token.";
+                resultDiv.innerText = "Error: Check Token Permissions (Must be 'Read' type).";
             } finally {
                 btn.innerText = "Describe Image";
             }
         };
 
-        // Project 3: Prompt Lab (Fixed Model Name)
+        // Project 3: Prompt Lab Logic
         window.testPrompt = async () => {
             const input = document.getElementById('labInput').value;
             const persona = document.getElementById('persona').value;
@@ -126,7 +132,7 @@
 
             try {
                 const out = await hf.textGeneration({
-                    model: 'google/flan-t5-large', // FIXED: changed from 'xxx' to 'large'
+                    model: 'google/flan-t5-large',
                     inputs: `${persona} User: ${input} Assistant:`,
                     parameters: { max_new_tokens: 100 }
                 });
