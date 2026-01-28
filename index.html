@@ -39,6 +39,52 @@
         <h2>Featured AI Projects</h2>
         <div class="project-card">
             <h3>Multimodal AI Vision</h3>
+            <div class="project-card">
+    <h3>Project 3: AI Prompt & Persona Lab</h3>
+    <p>Test how different 'System Instructions' affect AI behavior. This mirrors the RLHF work I perform for LLM alignment.</p>
+    
+    <label>Choose AI Persona:</label>
+    <select id="persona" style="width:100%; margin-bottom:10px; padding:5px; background:#0f172a; color:white;">
+        <option value="You are a strict, factual research assistant.">Strict Fact-Checker</option>
+        <option value="You are a creative, poetic storyteller.">Creative Poet</option>
+        <option value="You are a helpful senior software engineer.">Coding Mentor</option>
+    </select>
+
+    <textarea id="promptInput" placeholder="Enter your prompt here..." style="width:100%; height:80px; margin-bottom:10px;"></textarea>
+    <button onclick="testPrompt()" id="labBtn" class="btn">Generate Response</button>
+    
+    <div id="labResult" style="margin-top:20px; padding:10px; border:1px dashed #38bdf8; min-height:50px;"></div>
+</div>
+
+<script type="module">
+    import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
+    const hf = new HfInference('YOUR_HUGGING_FACE_TOKEN'); // Use the same token from your Vision project
+
+    window.testPrompt = async () => {
+        const persona = document.getElementById('persona').value;
+        const userInput = document.getElementById('promptInput').value;
+        const resultDiv = document.getElementById('labResult');
+        const btn = document.getElementById('labBtn');
+
+        if (!userInput) return alert("Enter a prompt first!");
+
+        btn.innerText = "Processing...";
+        resultDiv.innerText = "AI is generating based on persona...";
+
+        try {
+            const out = await hf.textGeneration({
+                model: 'google/flan-t5-xxx', // A powerful, open-source LLM
+                inputs: `${persona} User: ${userInput} Assistant:`,
+                parameters: { max_new_tokens: 100 }
+            });
+            resultDiv.innerText = out.generated_text;
+        } catch (e) {
+            resultDiv.innerText = "Error connecting to LLM. Check API token.";
+        } finally {
+            btn.innerText = "Generate Response";
+        }
+    };
+</script>
             <p>A web application utilizing Computer Vision to generate descriptive text from image uploads.</p>
         </div>
         <a href="Ken_resume.pdf" class="btn">View Full Resume</a>
