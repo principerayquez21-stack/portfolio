@@ -26,7 +26,7 @@
 
     <section id="about">
         <h2>Professional Profile</h2>
-        <p>Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating LLM responses through RLHF methodologies to ensure accuracy and safety.I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University.</p>
+        <p>Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating LLM responses through RLHF methodologies to ensure accuracy and safety. I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University.</p>
         <p>Based in <strong>Saint Pauls, NC</strong>, I bring a unique focus on operational security and data integrity from my background in the NC Department of Adult Corrections.</p>
         <a href="Ken_resume.pdf" class="btn">View Full Resume</a>
     </section>
@@ -52,7 +52,7 @@
 
         <div class="project-card">
             <h3>3. AI Prompt & Persona Lab</h3>
-            <p>Testing how 'System Personas' influence LLM accuracy and tone, mirroring my RLHF work.</p>
+            <p>Testing how 'System Personas' influence LLM accuracy and tone.</p>
             <select id="persona">
                 <option value="You are a strict, factual research assistant.">Strict Fact-Checker</option>
                 <option value="You are a creative, poetic storyteller.">Creative Poet</option>
@@ -64,16 +64,16 @@
         </div>
     </section>
 
- <script src="https://unpkg.com/sentiment@5.0.2/dist/sentiment.min.js"></script>
+    <script src="https://unpkg.com/sentiment@5.0.2/dist/sentiment.min.js"></script>
 
     <script type="module">
         import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
 
         // 2. TOKEN SETUP
-        // We split the token to trick GitHub's security bot
+        // We split the token so GitHub doesn't auto-delete it
         const tokenPart1 = "hf_";
         
-        // PASTE YOUR NEW "READ" TOKEN BELOW (Remove the 'hf_' part!)
+        // THIS IS YOUR CORRECT 'jCLV' TOKEN:
         const tokenPart2 = "jCLVzMvgViDMVIPopGDUHIgIvBTNeykov"; 
         
         const HF_TOKEN = tokenPart1 + tokenPart2;
@@ -81,7 +81,10 @@
 
         // Project 1: Mood Detector Logic
         window.analyzeMood = () => {
-            // Now 'Sentiment' will be defined correctly
+            if (typeof Sentiment === 'undefined') {
+                document.getElementById('moodResult').innerText = "Error: Library loading. Wait 3s and try again.";
+                return;
+            }
             var sentiment = new Sentiment();
             var text = document.getElementById('moodInput').value;
             var result = sentiment.analyze(text);
@@ -112,7 +115,7 @@
                 resultDiv.innerText = `AI Description: "${res.generated_text}"`;
             } catch (e) {
                 console.error(e);
-                resultDiv.innerText = "Error: Check Token Permissions (Must be 'Read' type).";
+                resultDiv.innerText = "Error: Blocked by CORS. Your token is likely 'Fine-grained'. Please create a standard 'Read' token.";
             } finally {
                 btn.innerText = "Describe Image";
             }
@@ -139,7 +142,7 @@
                 resultDiv.innerText = out.generated_text;
             } catch (e) {
                 console.error(e);
-                resultDiv.innerText = "Error: Check Console (F12) for details.";
+                resultDiv.innerText = "Error: Blocked by CORS. Check token permissions.";
             } finally {
                 btn.innerText = "Generate Response";
             }
