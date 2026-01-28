@@ -10,90 +10,102 @@
         .badge { display: inline-block; background: #38bdf8; color: #0f172a; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8em; margin: 5px; }
         section { background: #1e293b; padding: 25px; margin-top: 25px; border-radius: 12px; border: 1px solid #334155; }
         h2 { color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 10px; }
-        .project-card { background: #0f172a; padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #38bdf8; }
-        .btn { display: inline-block; background: #38bdf8; color: #0f172a; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 15px; }
+        .project-card { background: #0f172a; padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #38bdf8; margin-bottom: 20px; }
+        .btn { display: inline-block; background: #38bdf8; color: #0f172a; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 15px; cursor: pointer; border: none; }
+        textarea, select { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #334155; background: #1e293b; color: white; }
+        .result-box { margin-top: 15px; padding: 10px; border: 1px dashed #38bdf8; min-height: 40px; font-style: italic; }
     </style>
 </head>
 <body>
+
     <header>
         <h1>Kenneth Robinson-Neal</h1>
         <p>AI Trainer & CS Student | Specializing in LLM Alignment & Python</p>
-        <div class="badge">RLHF</div> <div class="badge">Prompt Engineering</div> <div class="badge">Python</div>
+        <div class="badge">RLHF</div> <div class="badge">Prompt Engineering</div> <div class="badge">NLP</div> <div class="badge">Python</div>
     </header>
 
     <section id="about">
         <h2>Professional Profile</h2>
-        <p>Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating and ranking LLM responses through RLHF methodologies to ensure accuracy and safety. I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University.</p>
-        <p>With a background in the <strong>NC Department of Adult Corrections</strong>, I bring a unique focus on operational security, crisis management, and data integrity to the AI field.</p>
-    </section>
-
-    <section id="experience">
-        <h2>Key Experience</h2>
-        <div class="project-card">
-            <h3>AI Trainer | Outlier AI</h3>
-            <p>Developing "gold-standard" responses for Large Language Models and conducting rigorous fact-checking to eliminate model hallucinations.</p>
-        </div>
-    </section>
-
-    <section id="projects">
-        <h2>Featured AI Projects</h2>
-        <div class="project-card">
-            <h3>Multimodal AI Vision</h3>
-            <div class="project-card">
-    <h3>Project 3: AI Prompt & Persona Lab</h3>
-    <p>Test how different 'System Instructions' affect AI behavior. This mirrors the RLHF work I perform for LLM alignment.</p>
-    
-    <label>Choose AI Persona:</label>
-    <select id="persona" style="width:100%; margin-bottom:10px; padding:5px; background:#0f172a; color:white;">
-        <option value="You are a strict, factual research assistant.">Strict Fact-Checker</option>
-        <option value="You are a creative, poetic storyteller.">Creative Poet</option>
-        <option value="You are a helpful senior software engineer.">Coding Mentor</option>
-    </select>
-
-    <textarea id="promptInput" placeholder="Enter your prompt here..." style="width:100%; height:80px; margin-bottom:10px;"></textarea>
-    <button onclick="testPrompt()" id="labBtn" class="btn">Generate Response</button>
-    
-    <div id="labResult" style="margin-top:20px; padding:10px; border:1px dashed #38bdf8; min-height:50px;"></div>
-</div>
-
-<script type="module">
-    import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
-    const hf = new HfInference(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)
-
-    window.testPrompt = async () => {
-        const persona = document.getElementById('persona').value;
-        const userInput = document.getElementById('promptInput').value;
-        const resultDiv = document.getElementById('labResult');
-        const btn = document.getElementById('labBtn');
-
-        if (!userInput) return alert("Enter a prompt first!");
-
-        btn.innerText = "Processing...";
-        resultDiv.innerText = "AI is generating based on persona...";
-
-        try {
-            const out = await hf.textGeneration({
-                model: 'google/flan-t5-xxx', // A powerful, open-source LLM
-                inputs: `${persona} User: ${userInput} Assistant:`,
-                parameters: { max_new_tokens: 100 }
-            });
-            resultDiv.innerText = out.generated_text;
-        } catch (e) {
-            resultDiv.innerText = "Error connecting to LLM. Check API token.";
-        } finally {
-            btn.innerText = "Generate Response";
-        }
-    };
-</script>
-            <p>A web application utilizing Computer Vision to generate descriptive text from image uploads.</p>
-        </div>
+        [cite_start]<p>Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating LLM responses through RLHF methodologies to ensure accuracy and safety[cite: 10, 13, 16]. [cite_start]I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University[cite: 43, 44].</p>
+        [cite_start]<p>Based in <strong>Saint Pauls, NC</strong>, I bring a unique focus on operational security and data integrity from my background in the NC Department of Adult Corrections[cite: 2, 30, 88].</p>
         <a href="Ken_resume.pdf" class="btn">View Full Resume</a>
     </section>
 
-    <section id="contact">
-        <h2>Get In Touch</h2>
-        <p>📍 Saint Pauls, NC (Willing to relocate)</p>
-        <p>📧 principerayquez21@gmail.com</p>
+    <section id="projects">
+        <h2>Interactive AI Showcase</h2>
+
+        <div class="project-card">
+            <h3>1. AI Mood Detector (NLP)</h3>
+            <p>Analyzes text sentiment in real-time using Natural Language Processing.</p>
+            <textarea id="moodInput" placeholder="How are you feeling about AI today?"></textarea>
+            <button onclick="analyzeMood()" class="btn">Analyze Sentiment</button>
+            <div id="moodResult" class="result-box"></div>
+        </div>
+
+        <div class="project-card">
+            <h3>2. Multimodal AI Vision</h3>
+            <p>Upload a photo and the AI will generate a descriptive caption using computer vision.</p>
+            <input type="file" id="imageInput" accept="image/*">
+            <button onclick="describeImage()" id="visionBtn" class="btn">Describe Image</button>
+            <div id="visionResult" class="result-box"></div>
+        </div>
+
+        <div class="project-card">
+            <h3>3. AI Prompt & Persona Lab</h3>
+            [cite_start]<p>Testing how 'System Personas' influence LLM accuracy and tone, mirroring my RLHF work[cite: 13, 16].</p>
+            <select id="persona">
+                <option value="You are a strict, factual research assistant.">Strict Fact-Checker</option>
+                <option value="You are a creative, poetic storyteller.">Creative Poet</option>
+                <option value="You are a helpful senior software engineer.">Coding Mentor</option>
+            </select>
+            <textarea id="labInput" placeholder="Ask the AI a question..."></textarea>
+            <button onclick="testPrompt()" id="labBtn" class="btn">Generate Response</button>
+            <div id="labResult" class="result-box"></div>
+        </div>
     </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/sentiment@5.0.2/lib/index.min.js"></script>
+    <script type="module">
+        import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
+        
+        // PASTE YOUR TOKEN BELOW
+        const HF_TOKEN = 'PASTE_YOUR_TOKEN_HERE'; 
+        const hf = new HfInference(HF_TOKEN);
+
+        // Project 1 Logic
+        window.analyzeMood = () => {
+            const sentiment = new Sentiment();
+            const result = sentiment.analyze(document.getElementById('moodInput').value);
+            let mood = result.score > 0 ? "Positive 😊" : result.score < 0 ? "Negative ☹️" : "Neutral 😐";
+            document.getElementById('moodResult').innerText = `Result: ${mood} (Score: ${result.score})`;
+        };
+
+        // Project 2 Logic
+        window.describeImage = async () => {
+            const file = document.getElementById('imageInput').files[0];
+            if (!file) return alert("Select an image!");
+            document.getElementById('visionResult').innerText = "Analyzing pixels...";
+            try {
+                const res = await hf.imageToText({ data: file, model: 'nlpconnect/vit-gpt2-image-captioning' });
+                document.getElementById('visionResult').innerText = `AI Description: "${res.generated_text}"`;
+            } catch (e) { document.getElementById('visionResult').innerText = "Error. Check Token."; }
+        };
+
+        // Project 3 Logic
+        window.testPrompt = async () => {
+            const input = document.getElementById('labInput').value;
+            const persona = document.getElementById('persona').value;
+            if (!input) return alert("Enter a prompt!");
+            document.getElementById('labResult').innerText = "AI is thinking...";
+            try {
+                const out = await hf.textGeneration({
+                    model: 'google/flan-t5-xxx',
+                    inputs: `${persona} User: ${input} Assistant:`,
+                    parameters: { max_new_tokens: 100 }
+                });
+                document.getElementById('labResult').innerText = out.generated_text;
+            } catch (e) { document.getElementById('labResult').innerText = "Error. Check Token."; }
+        };
+    </script>
 </body>
 </html>
