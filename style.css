@@ -118,3 +118,12 @@ h3 { color: #94a3b8; font-weight: normal; }
     flex-wrap: wrap;
     margin-top: 20px;
 }
+/* Vision Preview Image */
+#vision-preview {
+    max-width: 100%;
+    height: auto;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #00ffff; /* Cyan border */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
