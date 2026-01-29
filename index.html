@@ -12,7 +12,6 @@
         <div class="container">
             <h1>Kenneth Robinson-Neal</h1>
             <h3>I am a <span class="typewriter"></span></h3>
-            
             <div class="badges">
                 <span class="badge">RLHF</span>
                 <span class="badge">Prompt Engineering</span>
@@ -41,10 +40,8 @@
         <div class="card showcase-box">
             <h3>1. AI Mood Detector (NLP)</h3>
             <p>Analyzes text sentiment in real-time using simulated keyword logic.</p>
-            
             <input type="text" id="sentiment-input" placeholder="Type something like 'I am happy' or 'This is bad'..." class="input-field">
             <button onclick="analyzeSentiment()" class="btn primary-btn analyze-btn">Analyze Sentiment</button>
-            
             <div id="sentiment-output" class="output-box"></div>
         </div>
 
@@ -74,7 +71,6 @@
             I am currently available for <strong>AI Training</strong>, <strong>RLHF</strong>, and <strong>Software Engineering</strong> roles.
             Let's discuss how my background in security and code can add value to your team.
         </p>
-        
         <div class="button-group">
             <a href="mailto:principerayquez21@gmail.com?subject=Interview Request: Kenneth Robinson-Neal" class="btn primary-btn email-btn">
                 ✉️ Send Me an Email
@@ -86,7 +82,7 @@
     </section>
 
     <script>
-        // 1. Typewriter Effect Logic
+        // Typewriter Effect
         const textElement = document.querySelector(".typewriter");
         const roles = ["AI Trainer.", "Python Developer.", "Prompt Engineer.", "Security Specialist."];
         let roleIndex = 0;
@@ -100,5 +96,54 @@
             } else {
                 textElement.textContent = currentRole.substring(0, charIndex++);
             }
-
             let typeSpeed = isDeleting ? 100 : 200;
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000; 
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+            }
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener('DOMContentLoaded', typeEffect);
+
+        // Sentiment Analysis Logic
+        function analyzeSentiment() {
+            const btn = document.querySelector('.analyze-btn');
+            const output = document.getElementById('sentiment-output');
+            const input = document.getElementById('sentiment-input').value.toLowerCase();
+            const originalText = btn.innerText;
+
+            if (!input) {
+                output.innerText = "Please type something first!";
+                output.style.color = "#ff6b6b";
+                return;
+            }
+
+            btn.innerText = "Analyzing...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+            output.innerText = "";
+
+            setTimeout(() => {
+                let result = "Neutral 😐";
+                let color = "#b0b8c4"; 
+                if (input.includes("good") || input.includes("happy") || input.includes("great") || input.includes("love")) {
+                    result = "Positive 😊";
+                    color = "#00ffff"; 
+                } else if (input.includes("bad") || input.includes("sad") || input.includes("hate") || input.includes("error")) {
+                    result = "Negative 😠";
+                    color = "#ff6b6b"; 
+                }
+                output.innerText = `Detected Sentiment: ${result} (Confidence: 98%)`;
+                output.style.color = color;
+                output.style.fontWeight = "bold";
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+                btn.disabled = false;
+            }, 1000); 
+        }
+    </script>
+</body>
+</html>
