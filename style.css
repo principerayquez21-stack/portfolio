@@ -1,0 +1,120 @@
+/* 1. Global Reset & Dark Theme */
+body {
+    background-color: #0b1120;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 2. Hero Section */
+.hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(180deg, #101729 0%, #0b1120 100%);
+}
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+h2 { color: #ffffff; margin-top: 0; }
+h3 { color: #94a3b8; font-weight: normal; }
+
+.typewriter {
+    color: #00ffff;
+    border-right: 2px solid #00ffff;
+    font-weight: bold;
+    animation: blink 0.75s step-end infinite;
+}
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: #00ffff; }
+}
+
+/* 3. Badges */
+.badges { margin-top: 20px; }
+.badge {
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    margin: 0 5px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+/* 4. Cards */
+.card {
+    background: #1e293b;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 255, 255, 0.15);
+    border-color: #00ffff;
+}
+
+/* 5. Inputs & Buttons */
+.input-field, .file-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #0f172a;
+    border: 1px solid #334155;
+    color: white;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s ease;
+}
+.primary-btn {
+    background-color: #00ffff;
+    color: #0b1120;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+.primary-btn:hover {
+    background-color: #99f6f6;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+.secondary-btn {
+    background: transparent;
+    border: 2px solid #00ffff;
+    color: #00ffff;
+}
+.secondary-btn:hover {
+    background: rgba(0, 255, 255, 0.1);
+}
+.output-box { margin-top: 15px; min-height: 20px; }
+
+/* 6. Contact Section */
+.contact-card {
+    text-align: center;
+    background: rgba(16, 23, 41, 0.9);
+    border: 1px solid #00ffff;
+}
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
