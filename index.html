@@ -31,7 +31,7 @@
             <p>
                 Based in <strong>Saint Pauls, NC</strong>, I bring a unique focus on operational security and data integrity from my background in the NC Department of Adult Corrections.
             </p>
-            <a href="https://github.com/principerayquez21-stack/portfolio/blob/main/Ken_resume.pdf" target="_blank" class="btn secondary-btn">View Full Resume</a>
+            <a href="Ken_resume.pdf" target="_blank" class="btn secondary-btn">View Full Resume</a>
         </div>
     </section>
 
@@ -63,14 +63,16 @@
             <h3>3. AI Prompt & Persona Lab</h3>
             <p>Testing how 'System Personas' influence LLM accuracy and tone.</p>
             
-            <select class="input-field">
-                <option>Strict Fact-Checker</option>
-                <option>Creative Storyteller</option>
-                <option>Code Debugger</option>
+            <select id="persona-select" class="input-field">
+                <option value="strict">Strict Fact-Checker</option>
+                <option value="creative">Creative Storyteller</option>
+                <option value="coder">Code Debugger</option>
             </select>
             
-            <textarea placeholder="Ask the AI a question..." class="input-field"></textarea>
-            <button class="btn primary-btn" onclick="alert('This feature is under construction!')">Generate Response</button>
+            <textarea id="prompt-input" placeholder="Ask the AI a question..." class="input-field"></textarea>
+            <button onclick="generateResponse()" class="btn primary-btn prompt-btn">Generate Response</button>
+            
+            <div id="prompt-output" class="output-box"></div>
         </div>
     </section>
 
@@ -92,7 +94,7 @@
     </section>
 
     <script>
-        // 1. Typewriter Effect
+        // --- 1. Typewriter Effect ---
         const textElement = document.querySelector(".typewriter");
         const roles = ["AI Trainer.", "Python Developer.", "Prompt Engineer.", "Security Specialist."];
         let roleIndex = 0;
@@ -118,9 +120,10 @@
             }
             setTimeout(typeEffect, typeSpeed);
         }
+        // Start Typewriter
         document.addEventListener('DOMContentLoaded', typeEffect);
 
-        // 2. Sentiment Analysis Logic
+        // --- 2. Sentiment Analysis Logic ---
         function analyzeSentiment() {
             const btn = document.querySelector('.analyze-btn');
             const output = document.getElementById('sentiment-output');
@@ -160,7 +163,7 @@
             }, 1000); 
         }
 
-        // 3. Multimodal Vision Logic
+        // --- 3. Multimodal Vision Logic ---
         function analyzeImage() {
             const input = document.getElementById('vision-input');
             const preview = document.getElementById('vision-preview');
@@ -202,6 +205,44 @@
                 output.innerText = "⚠️ Please select an image file first.";
                 output.style.color = "#ff6b6b"; 
             }
+        }
+
+        // --- 4. Prompt Lab Logic ---
+        function generateResponse() {
+            const persona = document.getElementById('persona-select').value;
+            const input = document.getElementById('prompt-input').value;
+            const output = document.getElementById('prompt-output');
+            const btn = document.querySelector('.prompt-btn');
+
+            if (!input) {
+                output.innerText = "⚠️ Please enter a prompt first.";
+                output.style.color = "#ff6b6b"; 
+                return;
+            }
+
+            btn.innerText = "Thinking...";
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+            output.innerText = "";
+
+            setTimeout(() => {
+                let response = "";
+
+                if (persona === "strict") {
+                    response = "🤖 [System: Strict] Based on verified data, the answer is factual and concise. Sources indicate high confidence in this result.";
+                } else if (persona === "creative") {
+                    response = "✨ [System: Creative] Imagine a world where the answer unfolds like a story, painted with vibrant adjectives and emotional depth...";
+                } else if (persona === "coder") {
+                    response = "💻 [System: Code] \n> console.log('Optimized Solution');\n> // Logic checks passed.";
+                }
+
+                output.innerText = response;
+                output.style.color = "#00ffff"; 
+                
+                btn.innerText = "Generate Response";
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }, 1500);
         }
     </script>
 </body>
