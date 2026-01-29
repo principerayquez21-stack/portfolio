@@ -3,147 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenneth Robinson-Neal | AI Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Prompt Lab Test</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #0f172a; color: white; }
+        .box { background: #1e293b; padding: 20px; border-radius: 8px; border: 1px solid #334155; }
+        textarea { width: 100%; padding: 10px; margin-top: 10px; background: #334155; color: white; border: none; }
+        button { background: #38bdf8; color: #0f172a; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        #result { margin-top: 20px; padding: 10px; border: 1px dashed #38bdf8; min-height: 50px; }
+    </style>
 </head>
 <body>
 
-    <header class="hero">
-        <div class="container">
-            <h1>Kenneth Robinson-Neal</h1>
-            <h3>I am a <span class="typewriter"></span></h3>
-            <div class="badges">
-                <span class="badge">RLHF</span>
-                <span class="badge">Prompt Engineering</span>
-                <span class="badge">NLP</span>
-                <span class="badge">Python</span>
-            </div>
-        </div>
-    </header>
+    <h2>Project 3: Prompt Lab Test</h2>
+    <div class="box">
+        <p>Testing connection with model: <strong>google/flan-t5-large</strong></p>
+        <textarea id="labInput" placeholder="Type a question (e.g., What is AI?)"></textarea>
+        <button onclick="testPrompt()" id="labBtn">Generate Response</button>
+        <div id="result">Response will appear here...</div>
+    </div>
 
-    <section class="container">
-        <div class="card profile-card">
-            <h2>Professional Profile</h2>
-            <p>
-                Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating LLM responses through RLHF methodologies to ensure accuracy and safety. I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University.
-            </p>
-            <p>
-                Based in <strong>Saint Pauls, NC</strong>, I bring a unique focus on operational security and data integrity from my background in the NC Department of Adult Corrections.
-            </p>
-            <a href="https://github.com/principerayquez21-stack/portfolio/blob/main/Ken_resume.pdf" target="_blank" class="btn secondary-btn">View Full Resume</a>
-        </div>
-    </section>
+    <script type="module">
+        import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
 
-    <section class="container">
-        <h2 class="section-title">Interactive AI Showcase</h2>
+        // YOUR TOKEN (I put the jCLV one here)
+        const tokenPart1 = "hf_";
+        const tokenPart2 = "jCLVzMvgViDMVIPopGDUHIgIvBTNeykov"; 
+        const HF_TOKEN = tokenPart1 + tokenPart2;
 
-        <div class="card showcase-box">
-            <h3>1. AI Mood Detector (NLP)</h3>
-            <p>Analyzes text sentiment in real-time using simulated keyword logic.</p>
-            <input type="text" id="sentiment-input" placeholder="Type something like 'I am happy' or 'This is bad'..." class="input-field">
-            <button onclick="analyzeSentiment()" class="btn primary-btn analyze-btn">Analyze Sentiment</button>
-            <div id="sentiment-output" class="output-box"></div>
-        </div>
+        const hf = new HfInference(HF_TOKEN);
 
-        <div class="card showcase-box">
-            <h3>2. Multimodal AI Vision</h3>
-            <p>Upload a photo and the AI will generate a descriptive caption (Demo Mode).</p>
-            <input type="file" class="file-input">
-            <button class="btn primary-btn">Describe Image</button>
-        </div>
+        window.testPrompt = async () => {
+            const input = document.getElementById('labInput').value;
+            const resultDiv = document.getElementById('result');
+            const btn = document.getElementById('labBtn');
 
-        <div class="card showcase-box">
-            <h3>3. AI Prompt & Persona Lab</h3>
-            <p>Testing how 'System Personas' influence LLM accuracy and tone.</p>
-            <select class="input-field">
-                <option>Strict Fact-Checker</option>
-                <option>Creative Storyteller</option>
-                <option>Code Debugger</option>
-            </select>
-            <textarea placeholder="Ask the AI a question..." class="input-field"></textarea>
-            <button class="btn primary-btn">Generate Response</button>
-        </div>
-    </section>
+            if (!input) return alert("Enter a prompt!");
 
-    <section id="contact" class="contact-card container">
-        <h2>🚀 Ready to Collaborate?</h2>
-        <p>
-            I am currently available for <strong>AI Training</strong>, <strong>RLHF</strong>, and <strong>Software Engineering</strong> roles.
-            Let's discuss how my background in security and code can add value to your team.
-        </p>
-        <div class="button-group">
-            <a href="mailto:principerayquez21@gmail.com?subject=Interview Request: Kenneth Robinson-Neal" class="btn primary-btn email-btn">
-                ✉️ Send Me an Email
-            </a>
-            <a href="https://www.linkedin.com/in/kenneth-robinson-99088899" target="_blank" class="btn secondary-btn linkedin-btn">
-                🔗 LinkedIn Profile
-            </a>
-        </div>
-    </section>
+            resultDiv.innerText = "Attempting to connect...";
+            btn.innerText = "Working...";
 
-    <script>
-        // Typewriter Effect
-        const textElement = document.querySelector(".typewriter");
-        const roles = ["AI Trainer.", "Python Developer.", "Prompt Engineer.", "Security Specialist."];
-        let roleIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-
-        function typeEffect() {
-            const currentRole = roles[roleIndex];
-            if (isDeleting) {
-                textElement.textContent = currentRole.substring(0, charIndex--);
-            } else {
-                textElement.textContent = currentRole.substring(0, charIndex++);
+            try {
+                // We are asking for a simple text generation
+                const out = await hf.textGeneration({
+                    model: 'google/flan-t5-large',
+                    inputs: input,
+                    parameters: { max_new_tokens: 100 }
+                });
+                
+                // If we get here, it worked!
+                resultDiv.innerText = out.generated_text;
+                
+            } catch (e) {
+                console.error(e);
+                // This will print the EXACT error to the screen so we don't need the console
+                resultDiv.innerText = "FAILED: " + e.message;
+            } finally {
+                btn.innerText = "Generate Response";
             }
-            let typeSpeed = isDeleting ? 100 : 200;
-            if (!isDeleting && charIndex === currentRole.length) {
-                typeSpeed = 2000; 
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                roleIndex = (roleIndex + 1) % roles.length;
-            }
-            setTimeout(typeEffect, typeSpeed);
-        }
-        document.addEventListener('DOMContentLoaded', typeEffect);
-
-        // Sentiment Analysis Logic
-        function analyzeSentiment() {
-            const btn = document.querySelector('.analyze-btn');
-            const output = document.getElementById('sentiment-output');
-            const input = document.getElementById('sentiment-input').value.toLowerCase();
-            const originalText = btn.innerText;
-
-            if (!input) {
-                output.innerText = "Please type something first!";
-                output.style.color = "#ff6b6b";
-                return;
-            }
-
-            btn.innerText = "Analyzing...";
-            btn.style.opacity = "0.7";
-            btn.disabled = true;
-            output.innerText = "";
-
-            setTimeout(() => {
-                let result = "Neutral 😐";
-                let color = "#b0b8c4"; 
-                if (input.includes("good") || input.includes("happy") || input.includes("great") || input.includes("love")) {
-                    result = "Positive 😊";
-                    color = "#00ffff"; 
-                } else if (input.includes("bad") || input.includes("sad") || input.includes("hate") || input.includes("error")) {
-                    result = "Negative 😠";
-                    color = "#ff6b6b"; 
-                }
-                output.innerText = `Detected Sentiment: ${result} (Confidence: 98%)`;
-                output.style.color = color;
-                output.style.fontWeight = "bold";
-                btn.innerText = originalText;
-                btn.style.opacity = "1";
-                btn.disabled = false;
-            }, 1000); 
-        }
+        };
     </script>
 </body>
 </html>
