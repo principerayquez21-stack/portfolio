@@ -49,34 +49,31 @@
         </div>
 
         <div class="card showcase-box">
-    <h3>2. Multimodal AI Vision</h3>
-    <p>Upload a photo and the AI will generate a descriptive caption (Demo Mode).</p>
-    
-    <input type="file" id="vision-input" class="file-input" accept="image/*">
-    
-    <button onclick="analyzeImage()" class="btn primary-btn vision-btn">Describe Image</button>
-    
-    <img id="vision-preview" src="" alt="Image Preview" style="display:none;">
-    
-    <div id="vision-output" class="output-box"></div>
-</div>
+            <h3>2. Multimodal AI Vision</h3>
+            <p>Upload a photo and the AI will generate a descriptive caption (Demo Mode).</p>
+            
+            <input type="file" id="vision-input" class="file-input" accept="image/*">
+            <button onclick="analyzeImage()" class="btn primary-btn vision-btn">Describe Image</button>
+            
+            <img id="vision-preview" src="" alt="Image Preview" style="display:none;">
+            <div id="vision-output" class="output-box"></div>
+        </div>
 
-       <div class="card showcase-box">
-    <h3>3. AI Prompt & Persona Lab</h3>
-    <p>Testing how 'System Personas' influence LLM accuracy and tone.</p>
-    
-    <select id="persona-select" class="input-field">
-        <option value="strict">Strict Fact-Checker</option>
-        <option value="creative">Creative Storyteller</option>
-        <option value="coder">Code Debugger</option>
-    </select>
-    
-    <textarea id="prompt-input" placeholder="Ask the AI a question..." class="input-field"></textarea>
-    
-    <button onclick="generateResponse()" class="btn primary-btn prompt-btn">Generate Response</button>
-    
-    <div id="prompt-output" class="output-box"></div>
-</div>
+        <div class="card showcase-box">
+            <h3>3. AI Prompt & Persona Lab</h3>
+            <p>Testing how 'System Personas' influence LLM accuracy and tone.</p>
+            
+            <select id="persona-select" class="input-field">
+                <option value="strict">Strict Fact-Checker</option>
+                <option value="creative">Creative Storyteller</option>
+                <option value="coder">Code Debugger</option>
+            </select>
+            
+            <textarea id="prompt-input" placeholder="Ask the AI a question..." class="input-field"></textarea>
+            <button onclick="generateResponse()" class="btn primary-btn prompt-btn">Generate Response</button>
+            
+            <div id="prompt-output" class="output-box"></div>
+        </div>
     </section>
 
     <section id="contact" class="contact-card container">
@@ -97,7 +94,7 @@
     </section>
 
     <script>
-        // 1. Typewriter Effect Logic
+        // 1. Typewriter Effect
         const textElement = document.querySelector(".typewriter");
         const roles = ["AI Trainer.", "Python Developer.", "Prompt Engineer.", "Security Specialist."];
         let roleIndex = 0;
@@ -125,7 +122,7 @@
         }
         document.addEventListener('DOMContentLoaded', typeEffect);
 
-        // 2. Interactive Button Logic
+        // 2. Sentiment Analysis Logic
         function analyzeSentiment() {
             const btn = document.querySelector('.analyze-btn');
             const output = document.getElementById('sentiment-output');
@@ -138,7 +135,6 @@
                 return;
             }
 
-            // Loading Animation
             btn.innerText = "Analyzing...";
             btn.style.opacity = "0.7";
             btn.disabled = true;
@@ -146,14 +142,14 @@
 
             setTimeout(() => {
                 let result = "Neutral 😐";
-                let color = "#b0b8c4"; // Gray
+                let color = "#b0b8c4"; 
 
                 if (input.includes("good") || input.includes("happy") || input.includes("great") || input.includes("love")) {
                     result = "Positive 😊";
-                    color = "#00ffff"; // Cyan
+                    color = "#00ffff"; 
                 } else if (input.includes("bad") || input.includes("sad") || input.includes("hate") || input.includes("error")) {
                     result = "Negative 😠";
-                    color = "#ff6b6b"; // Red
+                    color = "#ff6b6b"; 
                 }
 
                 output.innerText = `Detected Sentiment: ${result} (Confidence: 98%)`;
@@ -163,90 +159,90 @@
                 btn.innerText = originalText;
                 btn.style.opacity = "1";
                 btn.disabled = false;
-            }, 1000); // 1 second delay
+            }, 1000); 
         }
 
-        // Multimodal Vision Logic
-function analyzeImage() {
-    const input = document.getElementById('vision-input');
-    const preview = document.getElementById('vision-preview');
-    const output = document.getElementById('vision-output');
-    const btn = document.querySelector('.vision-btn');
+        // 3. Multimodal Vision Logic
+        function analyzeImage() {
+            const input = document.getElementById('vision-input');
+            const preview = document.getElementById('vision-preview');
+            const output = document.getElementById('vision-output');
+            const btn = document.querySelector('.vision-btn');
 
-    if (input.files && input.files[0]) {
-        const file = input.files[0];
-        const reader = new FileReader();
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
 
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.style.display = "block";
-        }
-        reader.readAsDataURL(file);
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = "block";
+                }
+                reader.readAsDataURL(file);
 
-        btn.innerText = "Scanning Image...";
-        btn.disabled = true;
-        btn.style.opacity = "0.7";
-        output.innerText = "";
+                btn.innerText = "Scanning Image...";
+                btn.disabled = true;
+                btn.style.opacity = "0.7";
+                output.innerText = "";
 
-        setTimeout(() => {
-            const responses = [
-                "Analysis: High confidence detection (97%). Objects: Indoor environment, lighting fixtures, tech interface.",
-                "Analysis: Detected object matches category 'Personal Device'. Sentiment: Neutral.",
-                "Analysis: Visual patterns indicate 'Professional Workspace'. Object recognition complete."
-            ];
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                setTimeout(() => {
+                    const responses = [
+                        "Analysis: High confidence detection (97%). Objects: Indoor environment, lighting fixtures, tech interface.",
+                        "Analysis: Detected object matches category 'Personal Device'. Sentiment: Neutral.",
+                        "Analysis: Visual patterns indicate 'Professional Workspace'. Object recognition complete."
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
 
-            output.innerText = "✅ " + randomResponse;
-            output.style.color = "#00ffff"; 
-            
-            btn.innerText = "Describe Image";
-            btn.disabled = false;
-            btn.style.opacity = "1";
-        }, 2000);
+                    output.innerText = "✅ " + randomResponse;
+                    output.style.color = "#00ffff"; 
+                    
+                    btn.innerText = "Describe Image";
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                }, 2000);
 
-    } else {
-        output.innerText = "⚠️ Please select an image file first.";
-        output.style.color = "#ff6b6b"; 
-    }
-}
-    // Prompt Lab Logic
-function generateResponse() {
-    const persona = document.getElementById('persona-select').value;
-    const input = document.getElementById('prompt-input').value;
-    const output = document.getElementById('prompt-output');
-    const btn = document.querySelector('.prompt-btn');
-
-    if (!input) {
-        output.innerText = "⚠️ Please enter a prompt first.";
-        output.style.color = "#ff6b6b"; 
-        return;
-    }
-
-    // Loading Animation
-    btn.innerText = "Thinking...";
-    btn.disabled = true;
-    btn.style.opacity = "0.7";
-    output.innerText = "";
-
-    setTimeout(() => {
-        let response = "";
-
-        // Logic: Change the answer style based on the Persona selected
-        if (persona === "strict") {
-            response = "🤖 [System: Strict] Based on verified data, the answer is factual and concise. Sources indicate high confidence in this result.";
-        } else if (persona === "creative") {
-            response = "✨ [System: Creative] Imagine a world where the answer unfolds like a story, painted with vibrant adjectives and emotional depth...";
-        } else if (persona === "coder") {
-            response = "💻 [System: Code] \n> console.log('Optimized Solution');\n> // Logic checks passed.";
+            } else {
+                output.innerText = "⚠️ Please select an image file first.";
+                output.style.color = "#ff6b6b"; 
+            }
         }
 
-        output.innerText = response;
-        output.style.color = "#00ffff"; 
-        
-        btn.innerText = "Generate Response";
-        btn.disabled = false;
-        btn.style.opacity = "1";
-    }, 1500);
-}
+        // 4. Prompt Lab Logic
+        function generateResponse() {
+            const persona = document.getElementById('persona-select').value;
+            const input = document.getElementById('prompt-input').value;
+            const output = document.getElementById('prompt-output');
+            const btn = document.querySelector('.prompt-btn');
+
+            if (!input) {
+                output.innerText = "⚠️ Please enter a prompt first.";
+                output.style.color = "#ff6b6b"; 
+                return;
+            }
+
+            btn.innerText = "Thinking...";
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+            output.innerText = "";
+
+            setTimeout(() => {
+                let response = "";
+
+                if (persona === "strict") {
+                    response = "🤖 [System: Strict] Based on verified data, the answer is factual and concise. Sources indicate high confidence in this result.";
+                } else if (persona === "creative") {
+                    response = "✨ [System: Creative] Imagine a world where the answer unfolds like a story, painted with vibrant adjectives and emotional depth...";
+                } else if (persona === "coder") {
+                    response = "💻 [System: Code] \n> console.log('Optimized Solution');\n> // Logic checks passed.";
+                }
+
+                output.innerText = response;
+                output.style.color = "#00ffff"; 
+                
+                btn.innerText = "Generate Response";
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }, 1500);
+        }
+    </script>
 </body>
 </html>
