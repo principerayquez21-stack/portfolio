@@ -3,64 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prompt Lab Test</title>
+    <title>Kenneth Robinson-Neal | AI Software Engineer</title>
     <style>
-        body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #0f172a; color: white; }
-        .box { background: #1e293b; padding: 20px; border-radius: 8px; border: 1px solid #334155; }
-        textarea { width: 100%; padding: 10px; margin-top: 10px; background: #334155; color: white; border: none; }
-        button { background: #38bdf8; color: #0f172a; padding: 10px 20px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        #result { margin-top: 20px; padding: 10px; border: 1px dashed #38bdf8; min-height: 50px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; background: #0f172a; color: #f8fafc; }
+        header { text-align: center; padding: 60px 20px; background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 15px; border: 1px solid #334155; }
+        .badge { display: inline-block; background: #38bdf8; color: #0f172a; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.8em; margin: 5px; }
+        section { background: #1e293b; padding: 25px; margin-top: 25px; border-radius: 12px; border: 1px solid #334155; }
+        h2 { color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 10px; }
+        .project-card { background: #0f172a; padding: 20px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #38bdf8; margin-bottom: 20px; }
+        .btn { display: inline-block; background: #38bdf8; color: #0f172a; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 15px; cursor: pointer; border: none; }
+        textarea, select { width: 100%; padding: 10px; margin-top: 10px; border-radius: 5px; border: 1px solid #334155; background: #1e293b; color: white; }
+        .result-box { margin-top: 15px; padding: 10px; border: 1px dashed #38bdf8; min-height: 40px; font-style: italic; }
     </style>
 </head>
 <body>
 
-    <h2>Project 3: Prompt Lab Test</h2>
-    <div class="box">
-        <p>Testing connection with model: <strong>google/flan-t5-large</strong></p>
-        <textarea id="labInput" placeholder="Type a question (e.g., What is AI?)"></textarea>
-        <button onclick="testPrompt()" id="labBtn">Generate Response</button>
-        <div id="result">Response will appear here...</div>
-    </div>
+    <header>
+        <h1>Kenneth Robinson-Neal</h1>
+        <p>AI Trainer & CS Student | Specializing in LLM Alignment & Python</p>
+        <div class="badge">RLHF</div> <div class="badge">Prompt Engineering</div> <div class="badge">NLP</div> <div class="badge">Python</div>
+    </header>
 
-    <script type="module">
-        import { HfInference } from 'https://cdn.jsdelivr.net/npm/@huggingface/inference@2.6.4/+esm';
+    <section id="about">
+        <h2>Professional Profile</h2>
+        <p>Currently serving as an <strong>AI Trainer at Outlier AI</strong>, I specialize in evaluating LLM responses through RLHF methodologies to ensure accuracy and safety. I am also pursuing a <strong>B.S. in Computer Science</strong> at Maestro AI University.</p>
+        <p>Based in <strong>Saint Pauls, NC</strong>, I bring a unique focus on operational security and data integrity from my background in the NC Department of Adult Corrections.</p>
+        <a href="Ken_resume.pdf" class="btn">View Full Resume</a>
+    </section>
 
-        // YOUR TOKEN (I put the jCLV one here)
+    <section id="projects">
+        <h2>Interactive AI Showcase</h2>
+
+        <div class="project-card">
+            <h3>1. AI Mood Detector (NLP)</h3>
+            <p>Analyzes text sentiment in real-time using Keyword Matching Logic.</p>
+            <textarea id="moodInput" placeholder="Type something like 'I am happy' or 'This is bad'..."></textarea>
+            <button onclick="analyzeMood()" class="btn">Analyze Sentiment</button>
+            <div id="moodResult" class="result-box"></div>
+        </div>
+
+        <div class="project-card">
+            <h3>2. Multimodal AI Vision</h3>
+            <p>Upload a photo and the AI will generate a descriptive caption.</p>
+            <input type="file" id="imageInput" accept="image/*">
+            <button onclick="describeImage()" id="visionBtn" class="btn">Describe Image</button>
+            <div id="visionResult" class="result-box"></div>
+        </div>
+
+        <div class="project-card">
+            <h3>3. AI Prompt & Persona Lab</h3>
+            <p>Testing how 'System Personas' influence LLM accuracy and tone.</p>
+            <select id="persona">
+                <option value="You are a strict, factual research assistant.">Strict Fact-Checker</option>
+                <option value="You are a creative, poetic storyteller.">Creative Poet</option>
+                <option value="You are a helpful senior software engineer.">Coding Mentor</option>
+            </select>
+            <textarea id="labInput" placeholder="Ask the AI a question..."></textarea>
+            <button onclick="testPrompt()" id="labBtn" class="btn">Generate Response</button>
+            <div id="labResult" class="result-box"></div>
+        </div>
+    </section>
+
+    <script>
+        // TOKEN SETUP (Direct String)
         const tokenPart1 = "hf_";
         const tokenPart2 = "jCLVzMvgViDMVIPopGDUHIgIvBTNeykov"; 
         const HF_TOKEN = tokenPart1 + tokenPart2;
 
-        const hf = new HfInference(HF_TOKEN);
+        // Project 1: Mood Logic (Working)
+        function analyzeMood() {
+            const text = document.getElementById('moodInput').value.toLowerCase();
+            let mood = "Neutral 😐";
+            if (text.includes("good") || text.includes("happy") || text.includes("great") || text.includes("love")) {
+                mood = "Positive 😊";
+            } else if (text.includes("bad") || text.includes("sad") || text.includes("hate") || text.includes("angry")) {
+                mood = "Negative ☹️";
+            }
+            document.getElementById('moodResult').innerText = `Result: ${mood}`;
+        }
 
-        window.testPrompt = async () => {
+        // Project 2: Vision AI (Direct Fetch)
+        async function describeImage() {
+            const fileInput = document.getElementById('imageInput');
+            const resultDiv = document.getElementById('visionResult');
+            const btn = document.getElementById('visionBtn');
+
+            if (fileInput.files.length === 0) return alert("Select an image!");
+            const file = fileInput.files[0];
+            
+            resultDiv.innerText = "Uploading and Analyzing...";
+            btn.innerText = "Thinking...";
+
+            try {
+                // Read file as binary
+                const data = await file.arrayBuffer();
+                
+                const response = await fetch(
+                    "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-base",
+                    {
+                        headers: { Authorization: "Bearer " + HF_TOKEN },
+                        method: "POST",
+                        body: data,
+                    }
+                );
+
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                
+                const result = await response.json();
+                resultDiv.innerText = `AI Description: "${result[0].generated_text}"`;
+            } catch (error) {
+                resultDiv.innerText = "Error: " + error.message;
+            } finally {
+                btn.innerText = "Describe Image";
+            }
+        }
+
+        // Project 3: Prompt Lab (Direct Fetch)
+        async function testPrompt() {
             const input = document.getElementById('labInput').value;
-            const resultDiv = document.getElementById('result');
+            const persona = document.getElementById('persona').value;
+            const resultDiv = document.getElementById('labResult');
             const btn = document.getElementById('labBtn');
 
             if (!input) return alert("Enter a prompt!");
 
-            resultDiv.innerText = "Attempting to connect...";
-            btn.innerText = "Working...";
+            resultDiv.innerText = "AI is thinking...";
+            btn.innerText = "Processing...";
 
             try {
-                // We are asking for a simple text generation
-                const out = await hf.textGeneration({
-                    model: 'google/flan-t5-large',
-                    inputs: input,
-                    parameters: { max_new_tokens: 100 }
-                });
-                
-                // If we get here, it worked!
-                resultDiv.innerText = out.generated_text;
-                
-            } catch (e) {
-                console.error(e);
-                // This will print the EXACT error to the screen so we don't need the console
-                resultDiv.innerText = "FAILED: " + e.message;
+                const response = await fetch(
+                    "https://api-inference.huggingface.co/models/google/flan-t5-large",
+                    {
+                        headers: { 
+                            Authorization: "Bearer " + HF_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        method: "POST",
+                        body: JSON.stringify({ inputs: `${persona} User: ${input} Assistant:` }),
+                    }
+                );
+
+                if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+
+                const result = await response.json();
+                // flan-t5 usually returns an array
+                const answer = Array.isArray(result) ? result[0].generated_text : result.generated_text;
+                resultDiv.innerText = answer;
+            } catch (error) {
+                resultDiv.innerText = "Error: " + error.message;
             } finally {
                 btn.innerText = "Generate Response";
             }
-        };
+        }
     </script>
 </body>
 </html>
