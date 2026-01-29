@@ -49,11 +49,17 @@
         </div>
 
         <div class="card showcase-box">
-            <h3>2. Multimodal AI Vision</h3>
-            <p>Upload a photo and the AI will generate a descriptive caption (Demo Mode).</p>
-            <input type="file" class="file-input">
-            <button class="btn primary-btn">Describe Image</button>
-        </div>
+    <h3>2. Multimodal AI Vision</h3>
+    <p>Upload a photo and the AI will generate a descriptive caption (Demo Mode).</p>
+    
+    <input type="file" id="vision-input" class="file-input" accept="image/*">
+    
+    <button onclick="analyzeImage()" class="btn primary-btn vision-btn">Describe Image</button>
+    
+    <img id="vision-preview" src="" alt="Image Preview" style="display:none;">
+    
+    <div id="vision-output" class="output-box"></div>
+</div>
 
         <div class="card showcase-box">
             <h3>3. AI Prompt & Persona Lab</h3>
@@ -154,6 +160,50 @@
                 btn.disabled = false;
             }, 1000); // 1 second delay
         }
+
+        // Multimodal Vision Logic
+function analyzeImage() {
+    const input = document.getElementById('vision-input');
+    const preview = document.getElementById('vision-preview');
+    const output = document.getElementById('vision-output');
+    const btn = document.querySelector('.vision-btn');
+
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+        }
+        reader.readAsDataURL(file);
+
+        btn.innerText = "Scanning Image...";
+        btn.disabled = true;
+        btn.style.opacity = "0.7";
+        output.innerText = "";
+
+        setTimeout(() => {
+            const responses = [
+                "Analysis: High confidence detection (97%). Objects: Indoor environment, lighting fixtures, tech interface.",
+                "Analysis: Detected object matches category 'Personal Device'. Sentiment: Neutral.",
+                "Analysis: Visual patterns indicate 'Professional Workspace'. Object recognition complete."
+            ];
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+            output.innerText = "✅ " + randomResponse;
+            output.style.color = "#00ffff"; 
+            
+            btn.innerText = "Describe Image";
+            btn.disabled = false;
+            btn.style.opacity = "1";
+        }, 2000);
+
+    } else {
+        output.innerText = "⚠️ Please select an image file first.";
+        output.style.color = "#ff6b6b"; 
+    }
+}
     </script>
 </body>
 </html>
