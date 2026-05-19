@@ -1,23 +1,26 @@
-# Kenneth Robinson-Neal | Software Engineering Portfolio
+# Professional Portfolio Hub
+> **A centralized, responsive web architecture designed to showcase software engineering projects, agentic AI workflows, and technical management competencies.**
 
-### 🚀 About This Project
-This repository hosts the source code for my personal portfolio website. It serves as a central hub to showcase my transition from a background in security and corrections to a career in **Artificial Intelligence** and **Software Engineering**.
+## 🏗️ System Architecture
 
-The site demonstrates my front-end development skills and provides access to my professional history, including my current work in **RLHF (Reinforcement Learning from Human Feedback)** and AI model evaluation.
+This repository contains the source code for my professional portfolio website. The system is designed with a strict focus on front-end maintainability, responsive layouts, and clean DOM manipulation without relying on heavy frontend frameworks.
 
-### 🛠 Tech Stack
-* **Frontend:** HTML5, CSS3, JavaScript
-* **Version Control:** Git & GitHub
-* **Deployment:** GitHub Pages
+**Core Stack:**
+* **Languages:** HTML5, CSS3, Vanilla JavaScript (ES6+)
+* **Deployment:** GitHub Pages 
+* **Key Focus:** Semantic markup and optimized asset delivery for high-performance rendering.
 
-### 📂 Key Features
-* **Responsive Design:** Optimized for mobile and desktop viewing.
-* **Resume Download:** Direct access to my latest CV (`Ken_resume.pdf`).
-* **Project Showcase:** Highlights my work in Python scripts and AI logic training.
+**Design Patterns Implemented:**
+* *Responsive Design Pattern*: Utilized CSS Grid and Flexbox to ensure structural integrity across all viewport dimensions.
+* *Modular CSS*: Implemented to decouple styling components, preventing global scope pollution and enhancing maintainability.
 
-### 💻 How to Run Locally
-To view this website on your local machine:
+---
 
-1. Clone the repository:
+## ⚙️ Installation & Environment Initialization
+
+This is a static site architecture. No complex build tools or package managers are required to initialize the local environment.
+
+1. **Clone the repository:**
    ```bash
    git clone [https://github.com/principerayquez21-stack/portfolio.git](https://github.com/principerayquez21-stack/portfolio.git)
+   cd portfolio
